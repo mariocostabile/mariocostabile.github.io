@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mario Costabile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F2F1EC; --sheet: #FBFAF6;
+  --ink: #111111; --muted: #5E5E5A; --rule: #D3D0C7;
+  --accent: #1E6B4F; --accent-ink: #F2F1EC;
+  --shadow: 0 1px 2px rgb(17 17 17 / .06), 0 12px 32px -8px rgb(17 17 17 / .16);
+  --grain-op: .07; --grain-blend: multiply;
+  --gutter: clamp(16px, 4vw, 48px);
+  --inset: clamp(0px, 2.5vw, 32px);      /* space between the frame lines and the content */
+  --maxw: 1240px;
+  --sans: "Archivo", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121211; --sheet: #1C1C1A;
+    --ink: #ECEBE6; --muted: #9A9993; --rule: #2E2E2B;
+    --accent: #5FBF94; --accent-ink: #121211;
+    --shadow: 0 1px 2px rgb(0 0 0 / .4), 0 16px 40px -10px rgb(0 0 0 / .6);
+    --grain-op: .05; --grain-blend: screen;
+  }
+}
+
+* { box-sizing: border-box; margin: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; scrollbar-color: var(--muted) var(--bg); }
+body {
+  background: var(--bg); color: var(--ink);
+  font: 400 1.0625rem/1.6 var(--sans); font-variation-settings: "wdth" 100;
+  -webkit-font-smoothing: antialiased; caret-color: var(--accent);
+}
+/* page frame: two hairlines bounding the content column, like a printed sheet's margins */
+body::before {
+  content: ""; position: fixed; top: 0; bottom: 0; left: 50%; z-index: 0; pointer-events: none;
+  width: calc(min(var(--maxw), 100vw) - 2 * var(--gutter)); transform: translateX(-50%);
+  border-inline: 1px solid var(--rule);
+}
+/* paper grain, never intercepts clicks */
+body::after {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 50;
+  opacity: var(--grain-op); mix-blend-mode: var(--grain-blend);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+::selection { background: var(--accent); color: var(--accent-ink); }
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.22em; }
+a:not(.btn):hover { color: var(--accent); text-decoration: underline; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+main, header.top, footer { position: relative; z-index: 1; }
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 calc(var(--gutter) + var(--inset)); }
+.skip { position: absolute; left: -999px; } .skip:focus { left: var(--gutter); top: 8px; background: var(--ink); color: var(--bg); padding: 6px 10px; z-index: 60; }
+svg.i { width: 1em; height: 1em; stroke: currentColor; fill: none; stroke-width: 1.75; stroke-linecap: square; vertical-align: -0.12em; flex: none; }
+.mono { font-family: var(--mono); }
+
+/* full-bleed rules that cross the frame, so the frame reads as a grid */
+.rule { border: 0; border-top: 1px solid var(--rule); }
+.rule.ink { border-color: var(--ink); }
+
+/* nav */
+header.top { position: sticky; top: 0; z-index: 40; background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); }
+header.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 24px; }
+.brand { font-weight: 700; text-decoration: none; letter-spacing: -0.01em; }
+nav ul { display: flex; gap: 28px; list-style: none; padding: 0; }
+nav a { text-decoration: none; color: var(--muted); font-size: .9375rem; }
+.lang { display: flex; border: 1px solid var(--ink); }
+.lang button { font: 500 .8125rem var(--mono); background: none; color: var(--ink); border: 0; padding: 5px 10px; cursor: pointer; }
+.lang button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.right { display: flex; align-items: center; gap: 32px; }
+
+/* hero */
+.hero { padding-top: clamp(48px, 8vw, 104px); padding-bottom: clamp(56px, 8vw, 104px); display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; align-items: center; }
+.hero-text { grid-column: 1 / 8; }
+.name { font-weight: 750; font-variation-settings: "wdth" 112; font-size: clamp(2.5rem, 5.6vw, 4.5rem); line-height: .98; letter-spacing: -0.03em; }
+.name span { display: block; overflow: hidden; padding-bottom: .04em; }
+.name span > span { animation: rise 1.1s var(--ease) both; }
+.name span:nth-child(2) > span { animation-delay: .08s; }
+@keyframes rise { from { transform: translateY(105%); } }
+.role { margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--ink); max-width: 30rem; font-weight: 600; font-size: 1.25rem; }
+.lead { margin-top: 6px; color: var(--muted); font-size: 1.125rem; max-width: 44ch; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 12px 18px; border: 1px solid var(--ink); background: transparent; color: var(--ink); text-decoration: none; font: 600 .9375rem var(--sans); cursor: pointer; transition: background .25s var(--ease), color .25s var(--ease), border-color .25s var(--ease), transform .25s var(--ease); }
+.btn.primary { background: var(--ink); color: var(--bg); }
+.btn:hover { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn:active { transform: translateY(1px); }
+
+/* profile sheet: lighter paper laid on the page */
+.sheet { grid-column: 9 / 13; background: var(--sheet); box-shadow: var(--shadow); padding: 14px 14px 6px; animation: settle 1.2s .15s var(--ease) both; }
+@keyframes settle { from { transform: translateY(24px) rotate(1.5deg); opacity: 0; } }
+.sheet img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
+.sheet dl { display: grid; grid-template-columns: auto 1fr; gap: 0 16px; margin-top: 10px; font-size: .875rem; }
+.sheet dt, .sheet dd { padding: 9px 0; border-top: 1px solid var(--rule); }
+.sheet dt { font: 400 .75rem/1.9 var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.sheet dd { text-align: right; font-weight: 500; }
+.sheet dd a { text-decoration: none; }
+
+/* sections: heading column | hairline | content, like a ruled ledger */
+section.s { border-top: 1px solid var(--rule); }
+.s .wrap { display: grid; grid-template-columns: repeat(12, 1fr); gap: 0 24px; }
+.s h2 {
+  grid-column: 1 / 4; padding: clamp(48px, 6vw, 88px) 0; align-self: start; position: sticky; top: 64px;
+  font-weight: 700; font-variation-settings: "wdth" 112; font-size: clamp(1.375rem, 2.2vw, 1.875rem); line-height: 1.1; letter-spacing: -0.02em;
+}
+.s h2::before { content: ""; display: block; width: 28px; height: 3px; background: var(--ink); margin-bottom: 18px; }
+.s .body { grid-column: 4 / 13; border-left: 1px solid var(--rule); padding: clamp(48px, 6vw, 88px) 0 clamp(48px, 6vw, 88px) clamp(24px, 3vw, 48px); }
+.about p { font-size: clamp(1.25rem, 2vw, 1.625rem); line-height: 1.45; max-width: 36ch; letter-spacing: -0.01em; }
+
+.edu ul { padding: 0; }
+.edu li { list-style: none; display: grid; grid-template-columns: 1fr auto; gap: 4px 24px; padding: 20px 0; border-bottom: 1px solid var(--rule); }
+.edu li:first-child { padding-top: 0; }
+.edu .deg { font-weight: 600; font-size: 1.25rem; line-height: 1.3; }
+.edu .uni { color: var(--muted); grid-column: 1; }
+.tag { grid-column: 2; grid-row: 1; align-self: start; font: 500 .75rem var(--mono); color: var(--accent); border: 1px solid currentColor; padding: 2px 8px; white-space: nowrap; }
+
+.skills { display: grid; grid-template-columns: max-content 1fr; gap: 0 32px; border-top: 1px solid var(--ink); }
+.skills dt, .skills dd { padding: 14px 0; border-bottom: 1px solid var(--rule); }
+.skills dt { font-weight: 600; }
+.skills dd { color: var(--muted); }
+
+/* projects: a real table — the columns carry data */
+.projects .wrap { display: block; }
+.projects .head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px; padding: clamp(48px, 6vw, 88px) 0 28px; }
+.projects h2 { position: static; padding: 0; }
+.ptable { --cols: 3rem minmax(0, 1fr) 10.5rem 9rem 2rem; }
+.prow, .phead { display: grid; grid-template-columns: var(--cols); gap: 0 20px; align-items: baseline; }
+.phead { border-top: 3px solid var(--ink); border-bottom: 1px solid var(--ink); padding: 10px 12px; font: 500 .6875rem var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.plist { list-style: none; padding: 0; }
+.prow { position: relative; border-bottom: 1px solid var(--rule); padding: 24px 12px; transition: background .35s var(--ease); }
+.prow .n { font: 500 .875rem var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.prow h3 { font-weight: 700; font-variation-settings: "wdth" 110; font-size: clamp(1.25rem, 2vw, 1.75rem); letter-spacing: -0.02em; line-height: 1.15; }
+.prow h3 a { text-decoration: none; color: inherit !important; }
+.prow h3 a::after { content: ""; position: absolute; inset: 0; } /* whole row clickable, link stays the h3 */
+.prow h3 span { background: linear-gradient(currentColor, currentColor) 0 100% / 0 2px no-repeat; transition: background-size .45s var(--ease); }
+.prow .d { color: var(--muted); max-width: 68ch; margin-top: 6px; }
+.prow .topics { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 4px 14px; font: 400 .75rem var(--mono); color: var(--muted); }
+.prow .lang-c, .prow .upd { font: 400 .8125rem var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.prow .dot { display: inline-block; width: .6em; height: .6em; border-radius: 50%; margin-right: .5em; vertical-align: .05em; }
+.prow .go { font-size: 1.375rem; color: var(--muted); transition: transform .45s var(--ease), color .3s; justify-self: end; }
+.prow:hover, .prow:focus-within { background: color-mix(in srgb, var(--accent) 7%, transparent); }
+.prow:hover h3 span, .prow:focus-within h3 span { background-size: 100% 2px; }
+.prow:hover .go, .prow:focus-within .go { transform: translate(4px, -4px); color: var(--accent); }
+.prow h3 a:focus-visible { outline: none; }
+.prow:has(h3 a:focus-visible) { outline: 2px solid var(--accent); outline-offset: -2px; }
+.pfoot { display: flex; justify-content: flex-end; padding: 32px 0 clamp(48px, 6vw, 88px); }
+.sync { font: 400 .8125rem var(--mono); color: var(--muted); display: flex; align-items: center; gap: 12px; }
+.sync::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2.4s var(--ease) infinite; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); } 100% { box-shadow: 0 0 0 10px transparent; } }
+
+/* contact: a double rule closes the document */
+section.contact { border-top: 4px double var(--ink); }
+.contact .intro { font-size: clamp(1.25rem, 2vw, 1.5rem); line-height: 1.4; max-width: 30ch; }
+.mailrow { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 28px; }
+.mail { font-weight: 650; font-size: clamp(1.125rem, 2vw, 1.5rem); letter-spacing: -0.01em; text-decoration: none !important; border-bottom: 2px solid currentColor; padding-bottom: 2px; word-break: break-word; transition: color .2s, border-color .2s; }
+.copy { padding: 8px 12px; font-size: .8125rem; }
+.clinks { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 40px; list-style: none; padding: 0; }
+.place { margin-top: 24px; color: var(--muted); font-size: .9375rem; display: flex; gap: 8px; align-items: center; }
+footer { border-top: 1px solid var(--rule); }
+footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding-top: 22px; padding-bottom: 28px; color: var(--muted); font: 400 .75rem var(--mono); }
+
+@media (max-width: 860px) {
+  :root { --inset: 0px; }
+  body::before { display: none; }
+  nav { display: none; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-text, .sheet { grid-column: 1; }
+  .sheet { max-width: 320px; order: -1; }
+  .s .wrap { grid-template-columns: 1fr; }
+  .s h2 { grid-column: 1; position: static; padding-bottom: 20px; }
+  .s .body { grid-column: 1; border-left: 0; padding: 0 0 56px; }
+  .skills { grid-template-columns: 1fr; } .skills dt { border: 0; padding-bottom: 0; } .skills dd { padding-top: 4px; }
+  .ptable { --cols: 2rem minmax(0, 1fr) 1.5rem; }
+  .phead .c-lang, .phead .c-upd { display: none; }
+  .prow { padding: 20px 4px; }
+  .prow .lang-c, .prow .upd { grid-column: 2; }
+  .prow .lang-c { margin-top: 10px; }
+  .prow .go { grid-column: 3; grid-row: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main" data-i18n="skip">Salta al contenuto</a>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#">Mario Costabile</a>
+    <div class="right">
+      <nav aria-label="Sezioni"><ul>
+        <li><a href="#about" data-i18n="nav_about">Chi sono</a></li>
+        <li><a href="#education" data-i18n="nav_edu">Istruzione</a></li>
+        <li><a href="#skills" data-i18n="nav_skills">Competenze</a></li>
+        <li><a href="#projects" data-i18n="nav_projects">Progetti</a></li>
+        <li><a href="#contact" data-i18n="nav_contact">Contatti</a></li>
+      </ul></nav>
+      <div class="lang" role="group" aria-label="Lingua / Language">
+        <button type="button" data-lang="it" aria-pressed="true">IT</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap hero">
+    <div class="hero-text">
+      <h1 class="name"><span><span>Mario</span></span><span><span>Costabile</span></span></h1>
+      <p class="role" data-i18n="role">Laureato in Ingegneria Informatica</p>
+      <p class="lead" data-i18n="lead">Attualmente studente magistrale in Artificial Intelligence &amp; Machine Learning all'Università della Calabria.</p>
+      <div class="actions">
+        <a class="btn primary" href="#contact"><span data-i18n="cta_contact">Contattami</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4zM4 7l8 6 8-6"/></svg></a>
+        <a class="btn" href="#projects"><span data-i18n="cta_projects">Vedi i progetti</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M6 14l6 6 6-6"/></svg></a>
+      </div>
+    </div>
+    <aside class="sheet" aria-label="Profilo">
+      <img src="https://avatars.githubusercontent.com/u/105019269?v=4" alt="Foto di Mario Costabile" width="400" height="400">
+      <dl>
+        <dt data-i18n="f_city">Città</dt><dd>Rende (CS)</dd>
+        <dt data-i18n="f_study">Studio</dt><dd>MSc AI &amp; ML · UniCal</dd>
+        <dt>GitHub</dt><dd><a href="https://github.com/mariocostabile">@mariocostabile</a></dd>
+      </dl>
+    </aside>
+  </div>
+
+  <section class="s about" id="about"><div class="wrap">
+    <h2 data-i18n="nav_about">Chi sono</h2>
+    <div class="body"><p data-i18n="about">Affronto ogni progetto con metodo e lo porto fino in fondo. Non mi accontento di quello che so già: cerco occasioni per imparare e mi piace misurarmi con ambiti diversi, dall'intelligenza artificiale allo sviluppo web e mobile.</p></div>
+  </div></section>
+
+  <section class="s edu" id="education"><div class="wrap">
+    <h2 data-i18n="nav_edu">Istruzione</h2>
+    <div class="body"><ul>
+      <li><span class="deg" data-i18n="msc">Laurea magistrale in Artificial Intelligence &amp; Machine Learning</span><span class="uni" data-i18n="unical">Università della Calabria</span><span class="tag" data-i18n="ongoing">In corso</span></li>
+      <li><span class="deg" data-i18n="bsc">Laurea triennale in Ingegneria Informatica</span><span class="uni" data-i18n="unical">Università della Calabria</span></li>
+    </ul></div>
+  </div></section>
+
+  <section class="s" id="skills"><div class="wrap">
+    <h2 data-i18n="nav_skills">Competenze</h2>
+    <div class="body"><dl class="skills">
+      <dt data-i18n="sk_lang">Linguaggi</dt><dd>Python · Java · TypeScript · JavaScript · SQL</dd>
+      <dt>AI &amp; Data</dt><dd>PyTorch · Deep Learning · Computer Vision · Explainable AI · LLM · Jupyter</dd>
+      <dt>Web &amp; Mobile</dt><dd>React · React Native / Expo · Angular · Spring Boot · Vite · Tailwind CSS</dd>
+      <dt>Backend &amp; DevOps</dt><dd>REST · Keycloak / OAuth2 · PostgreSQL · Docker · Git</dd>
+      <dt data-i18n="sk_other">Altro</dt><dd data-i18n="sk_other_v">Concorrenza e multithreading · Bot Telegram</dd>
+    </dl></div>
+  </div></section>
+
+  <section class="s projects" id="projects"><div class="wrap">
+    <div class="head">
+      <h2 data-i18n="nav_projects">Progetti</h2>
+      <p class="sync" id="sync"></p>
+    </div>
+    <div class="ptable">
+      <div class="phead" aria-hidden="true"><span>#</span><span>Repository</span><span class="c-lang" data-i18n="col_lang">Linguaggio</span><span class="c-upd" data-i18n="col_upd">Aggiornato</span><span></span></div>
+      <ol class="plist" id="plist"></ol>
+    </div>
+    <div class="pfoot">
+      <a class="btn" href="https://github.com/mariocostabile?tab=repositories"><span data-i18n="all_repos">Vedi tutti i repository</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+    </div>
+  </div></section>
+
+  <section class="s contact" id="contact"><div class="wrap">
+    <h2 data-i18n="nav_contact">Contatti</h2>
+    <div class="body">
+      <p class="intro" data-i18n="contact_intro">Per opportunità di stage o lavoro, scrivimi.</p>
+      <div class="mailrow">
+        <a class="mail" href="mailto:mariocostabile05@gmail.com">mariocostabile05@gmail.com</a>
+        <button class="btn copy" type="button" id="copy"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8h12v12H8zM4 16V4h12"/></svg> <span data-i18n="copy">Copia</span></button>
+      </div>
+      <ul class="clinks">
+        <li><a class="btn primary" href="https://www.linkedin.com/in/mario-costabile-700b0826a/">LinkedIn <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+        <li><a class="btn" href="https://github.com/mariocostabile">GitHub <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+      </ul>
+      <p class="place"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg> Rende (CS), <span data-i18n="italy">Italia</span></p>
+    </div>
+  </div></section>
+</main>
+<footer><div class="wrap"><span>© 2026 Mario Costabile</span><span>mariocostabile.github.io</span></div></footer>
+
+<script>
+// preview: real data copied from the GitHub API on 14 Oct 2026; the real site reads data/projects.json written by the Action
+const data = { syncedAt: "2026-10-14T06:00:00Z", projects: [
+  { name: "AE-XAD-BUSI", url: "https://github.com/mariocostabile/AE-XAD-BUSI", description: "Explainable Anomaly Detection for Breast Cancer Localization (AE-XAD on BUSI)", language: "Jupyter Notebook", color: "#DA5B0B", topics: ["pytorch", "computer-vision", "explainable-ai"], stars: 0, pushedAt: "2026-10-11T11:14:35Z" },
+  { name: "CusApp", url: "https://github.com/mariocostabile/CusApp", description: "App mobile per CUS Cosenza e studenti Unical (Expo, React Native, TypeScript)", language: "TypeScript", color: "#3178C6", topics: ["react-native", "expo", "mobile-app"], stars: 0, pushedAt: "2026-10-13T15:56:36Z" },
+  { name: "HomeStock", url: "https://github.com/mariocostabile/HomeStock", description: "Bot Telegram per la gestione dell'inventario in ambito domestico.", language: "Python", color: "#3572A5", topics: ["telegram-bot", "inventory-management", "python"], stars: 1, pushedAt: "2026-01-17T17:35:32Z" },
+  { name: "VeraPelle_PSW", url: "https://github.com/mariocostabile/VeraPelle_PSW", description: "Piattaforma e-commerce con backend Spring Boot 3, autenticazione Keycloak OAuth2 e frontend Angular", language: "Java", color: "#B07219", topics: ["spring-boot", "angular", "keycloak"], stars: 0, pushedAt: "2025-06-12T08:21:02Z" },
+  { name: "LaFattoria", url: "https://github.com/mariocostabile/LaFattoria", description: "Sito web per la pizzeria e sala eventi 'La Fattoria' (React, Vite, Tailwind CSS)", language: "JavaScript", color: "#F1E05A", topics: ["react", "vite", "tailwindcss"], stars: 0, pushedAt: "2026-09-08T16:39:17Z" },
+  { name: "cleaner-pdf-ai-v2", url: "https://github.com/mariocostabile/cleaner-pdf-ai-v2", description: "Pulizia e normalizzazione automatica di testi nei PDF tramite LLM locali (Ollama / Llama 3)", language: "Python", color: "#3572A5", topics: ["llm", "nlp", "pdf"], stars: 0, pushedAt: "2025-10-28T14:19:48Z" },
+]};
+
+const T = {
+  it: {},
+  en: {
+    skip: "Skip to content", nav_about: "About", nav_edu: "Education", nav_skills: "Skills", nav_projects: "Projects", nav_contact: "Contact",
+    role: "BSc in Computer Engineering",
+    lead: "Currently an MSc student in Artificial Intelligence & Machine Learning at the University of Calabria.",
+    cta_contact: "Get in touch", cta_projects: "See projects", f_city: "City", f_study: "Studying",
+    about: "I approach every project with method and see it through to the end. I'm not content with what I already know: I look for chances to learn and enjoy taking on different fields, from artificial intelligence to web and mobile development.",
+    msc: "MSc in Artificial Intelligence & Machine Learning", bsc: "BSc in Computer Engineering", unical: "University of Calabria", ongoing: "Ongoing",
+    sk_lang: "Languages", sk_other: "Other", sk_other_v: "Concurrency & multithreading · Telegram bots",
+    col_lang: "Language", col_upd: "Updated",
+    all_repos: "See all repositories", contact_intro: "For internship or job opportunities, get in touch.", copy: "Copy", copied: "Copied", italy: "Italy",
+    synced: "Synced with GitHub", stars: "stars",
+  },
+};
+document.querySelectorAll("[data-i18n]").forEach(el => { T.it[el.dataset.i18n] ??= el.textContent; });
+Object.assign(T.it, { synced: "Sincronizzato con GitHub", stars: "stelle", copied: "Copiata" });
+let lang;
+
+function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+function render(l) {
+  lang = l;
+  const t = T[l], rtf = new Intl.RelativeTimeFormat(l, { numeric: "auto" });
+  const ago = iso => { const d = (new Date(iso) - Date.now()) / 864e5;
+    return Math.abs(d) < 30 ? rtf.format(Math.round(d), "day") : Math.abs(d) < 365 ? rtf.format(Math.round(d / 30), "month") : rtf.format(Math.round(d / 365), "year"); };
+  const list = document.getElementById("plist"); list.replaceChildren();
+  data.projects.forEach((p, i) => {
+    const li = el("li", "prow");
+    li.append(el("span", "n", String(i + 1).padStart(2, "0")));
+    const main = el("div"), h = el("h3"), a = el("a"); a.href = p.url;
+    a.append(el("span", null, p.name)); h.append(a); main.append(h);
+    if (p.description) main.append(el("p", "d", p.description));
+    const tp = el("p", "topics"); p.topics.forEach(x => tp.append(el("span", null, "#" + x)));
+    if (p.stars) tp.append(el("span", null, `★ ${p.stars} ${t.stars}`));
+    main.append(tp); li.append(main);
+    const lc = el("span", "lang-c");
+    if (p.language) { const dot = el("i", "dot"); dot.style.background = p.color; lc.append(dot, p.language); }
+    li.append(lc, el("span", "upd", ago(p.pushedAt)));
+    const arrow = el("span", "go"); arrow.setAttribute("aria-hidden", "true");
+    arrow.innerHTML = '<svg class="i" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg>';
+    li.append(arrow); list.append(li);
+  });
+  document.getElementById("sync").textContent = `${t.synced} · ${new Date(data.syncedAt).toLocaleDateString(l, { day: "numeric", month: "short", year: "numeric" })}`;
+  document.querySelectorAll("[data-i18n]").forEach(e => { e.textContent = t[e.dataset.i18n]; });
+  document.documentElement.lang = l;
+  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === l));
+}
+document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => render(b.dataset.lang)));
+document.getElementById("copy").addEventListener("click", async e => {
+  const label = e.currentTarget.querySelector("span");
+  try { await navigator.clipboard.writeText("mariocostabile05@gmail.com"); label.textContent = T[lang].copied; setTimeout(() => label.textContent = T[lang].copy, 1800); } catch {}
+});
+render(navigator.language.startsWith("it") ? "it" : "en");
+</script>
+</body>
+</html>
