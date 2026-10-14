@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mario Costabile</title>
+<meta name="description" content="Mario Costabile — laureato in Ingegneria Informatica, studente magistrale in Artificial Intelligence & Machine Learning all'Università della Calabria. Progetti, competenze e contatti.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main" data-i18n="skip">Salta al contenuto</a>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#">Mario Costabile</a>
+    <div class="right">
+      <nav aria-label="Sezioni"><ul>
+        <li><a href="#about" data-i18n="nav_about">Chi sono</a></li>
+        <li><a href="#education" data-i18n="nav_edu">Istruzione</a></li>
+        <li><a href="#skills" data-i18n="nav_skills">Competenze</a></li>
+        <li><a href="#projects" data-i18n="nav_projects">Progetti</a></li>
+        <li><a href="#contact" data-i18n="nav_contact">Contatti</a></li>
+      </ul></nav>
+      <div class="lang" role="group" aria-label="Lingua / Language">
+        <button type="button" data-lang="it" aria-pressed="true">IT</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap hero">
+    <div class="hero-text">
+      <h1 class="name"><span><span>Mario</span></span><span><span>Costabile</span></span></h1>
+      <p class="role" data-i18n="role">Laureato in Ingegneria Informatica</p>
+      <p class="lead" data-i18n="lead">Attualmente studente magistrale in Artificial Intelligence &amp; Machine Learning all'Università della Calabria.</p>
+      <div class="actions">
+        <a class="btn primary" href="#contact"><span data-i18n="cta_contact">Contattami</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4zM4 7l8 6 8-6"/></svg></a>
+        <a class="btn" href="#projects"><span data-i18n="cta_projects">Vedi i progetti</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M6 14l6 6 6-6"/></svg></a>
+        <a class="btn" id="cv" href="assets/cv/cv-mario-costabile.pdf" download hidden><span data-i18n="cta_cv">Scarica CV</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></a>
+      </div>
+    </div>
+    <aside class="sheet" aria-label="Profilo">
+      <img src="https://avatars.githubusercontent.com/u/105019269" alt="Foto di Mario Costabile" width="400" height="400">
+      <dl>
+        <dt data-i18n="f_city">Città</dt><dd>Rende (CS)</dd>
+        <dt data-i18n="f_study">Studio</dt><dd>MSc AI &amp; ML · UniCal</dd>
+        <dt>GitHub</dt><dd><a href="https://github.com/mariocostabile">@mariocostabile</a></dd>
+      </dl>
+    </aside>
+  </div>
+
+  <section class="s about" id="about"><div class="wrap">
+    <h2 data-i18n="nav_about">Chi sono</h2>
+    <div class="body"><p data-i18n="about">Affronto ogni progetto con metodo e lo porto fino in fondo. Non mi accontento di quello che so già: cerco occasioni per imparare e mi piace misurarmi con ambiti diversi, dall'intelligenza artificiale allo sviluppo web e mobile.</p></div>
+  </div></section>
+
+  <section class="s edu" id="education"><div class="wrap">
+    <h2 data-i18n="nav_edu">Istruzione</h2>
+    <div class="body"><ul>
+      <li><span class="deg" data-i18n="msc">Laurea magistrale in Artificial Intelligence &amp; Machine Learning</span><span class="uni" data-i18n="unical">Università della Calabria</span><span class="tag" data-i18n="ongoing">In corso</span></li>
+      <li><span class="deg" data-i18n="bsc">Laurea triennale in Ingegneria Informatica</span><span class="uni" data-i18n="unical">Università della Calabria</span></li>
+    </ul></div>
+  </div></section>
+
+  <section class="s" id="skills"><div class="wrap">
+    <h2 data-i18n="nav_skills">Competenze</h2>
+    <div class="body"><dl class="skills">
+      <dt data-i18n="sk_lang">Linguaggi</dt><dd>Python · Java · TypeScript · JavaScript · SQL</dd>
+      <dt>AI &amp; Data</dt><dd>PyTorch · Deep Learning · Computer Vision · Explainable AI · LLM · Jupyter</dd>
+      <dt>Web &amp; Mobile</dt><dd>React · React Native / Expo · Angular · Spring Boot · Vite · Tailwind CSS</dd>
+      <dt>Backend &amp; DevOps</dt><dd>REST · Keycloak / OAuth2 · PostgreSQL · Docker · Git</dd>
+      <dt data-i18n="sk_other">Altro</dt><dd data-i18n="sk_other_v">Concorrenza e multithreading · Bot Telegram</dd>
+    </dl></div>
+  </div></section>
+
+  <section class="s projects" id="projects"><div class="wrap">
+    <div class="head">
+      <h2 data-i18n="nav_projects">Progetti</h2>
+      <p class="sync" id="sync"></p>
+    </div>
+    <div class="ptable">
+      <div class="phead" aria-hidden="true"><span>#</span><span>Repository</span><span class="c-lang" data-i18n="col_lang">Linguaggio</span><span class="c-upd" data-i18n="col_upd">Aggiornato</span><span></span></div>
+      <ol class="plist" id="plist"></ol>
+    </div>
+    <div class="pfoot">
+      <a class="btn" href="https://github.com/mariocostabile?tab=repositories"><span data-i18n="all_repos">Vedi tutti i repository</span> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+    </div>
+  </div></section>
+
+  <section class="s contact" id="contact"><div class="wrap">
+    <h2 data-i18n="nav_contact">Contatti</h2>
+    <div class="body">
+      <p class="intro" data-i18n="contact_intro">Per opportunità di stage o lavoro, scrivimi.</p>
+      <div class="mailrow">
+        <a class="mail" href="mailto:mariocostabile05@gmail.com">mariocostabile05@gmail.com</a>
+        <button class="btn copy" type="button" id="copy"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8h12v12H8zM4 16V4h12"/></svg> <span data-i18n="copy">Copia</span></button>
+      </div>
+      <ul class="clinks">
+        <li><a class="btn primary" href="https://www.linkedin.com/in/mario-costabile-700b0826a/">LinkedIn <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+        <li><a class="btn" href="https://github.com/mariocostabile">GitHub <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+      </ul>
+      <p class="place"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg> Rende (CS), <span data-i18n="italy">Italia</span></p>
+    </div>
+  </div></section>
+</main>
+<footer><div class="wrap"><span>© 2026 Mario Costabile</span><span>mariocostabile.github.io</span></div></footer>
+
+<script src="main.js" defer></script>
+</body>
+</html>
