@@ -105,7 +105,7 @@ $("#copy").addEventListener("click", async (e) => {
 
 let saved = null;
 try { saved = localStorage.getItem("lang"); } catch {}
-render(saved === "it" || saved === "en" ? saved : navigator.language.startsWith("it") ? "it" : "en");
+render(saved === "it" ? "it" : "en");
 
 fetch("data/projects.json")
   .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
