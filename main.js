@@ -11,13 +11,13 @@ const T = {
     sk_lang: "Languages", sk_other: "Other", sk_other_v: "Concurrency & multithreading · Telegram bots",
     col_lang: "Language", col_upd: "Updated",
     all_repos: "See all repositories", contact_intro: "For internship or job opportunities, get in touch.", copy: "Copy", copied: "Copied", italy: "Italy",
-    synced: "Synced with GitHub", stars: "stars",
+    synced: "Synced with GitHub", star: "star", stars: "stars",
     load_error: "Projects can't be loaded right now.", load_error_link: "See them on GitHub",
   },
 };
 document.querySelectorAll("[data-i18n]").forEach((e) => { T.it[e.dataset.i18n] ??= e.textContent; });
 Object.assign(T.it, {
-  synced: "Sincronizzato con GitHub", stars: "stelle", copied: "Copiata",
+  synced: "Sincronizzato con GitHub", star: "stella", stars: "stelle", copied: "Copiata",
   load_error: "Non riesco a caricare i progetti in questo momento.", load_error_link: "Vedili su GitHub",
 });
 
@@ -62,7 +62,7 @@ function renderProjects() {
     if (p.description) main.append(el("p", "d", p.description));
     const tp = el("p", "topics");
     p.topics.forEach((x) => tp.append(el("span", null, "#" + x)));
-    if (p.stars) tp.append(el("span", null, `★ ${p.stars} ${t.stars}`));
+    if (p.stars) tp.append(el("span", null, `★ ${p.stars} ${p.stars === 1 ? t.star : t.stars}`));
     main.append(tp);
     const lc = el("span", "lang-c");
     if (p.language) {
