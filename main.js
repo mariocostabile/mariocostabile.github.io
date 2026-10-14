@@ -48,7 +48,7 @@ function renderProjects() {
   const ago = (iso) => {
     const d = (new Date(iso) - Date.now()) / 864e5;
     if (Math.abs(d) < 30) return rtf.format(Math.round(d), "day");
-    if (Math.abs(d) < 365) return rtf.format(Math.round(d / 30), "month");
+    if (Math.abs(d) < 335) return rtf.format(Math.round(d / 30), "month"); // from ~11 months on, say "last year"
     return rtf.format(Math.round(d / 365), "year");
   };
   list.replaceChildren(...data.projects.map((p, i) => {
@@ -62,7 +62,7 @@ function renderProjects() {
     if (p.description) main.append(el("p", "d", p.description));
     const tp = el("p", "topics");
     p.topics.forEach((x) => tp.append(el("span", null, "#" + x)));
-    if (p.stars) tp.append(el("span", null, `★ ${p.stars} ${p.stars === 1 ? t.star : t.stars}`));
+    if (p.stars) tp.append(el("span", null, `${p.stars} ${p.stars === 1 ? t.star : t.stars}`));
     main.append(tp);
     const lc = el("span", "lang-c");
     if (p.language) {

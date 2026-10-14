@@ -62,7 +62,7 @@ header.top .wrap { display: flex; align-items: center; justify-content: space-be
 nav ul { display: flex; gap: 28px; list-style: none; padding: 0; }
 nav a { text-decoration: none; color: var(--muted); font-size: .9375rem; }
 .lang { display: flex; border: 1px solid var(--ink); }
-.lang button { font: 500 .8125rem var(--mono); background: none; color: var(--ink); border: 0; padding: 5px 10px; cursor: pointer; }
+.lang button { font: 600 .8125rem var(--sans); background: none; color: var(--ink); border: 0; padding: 5px 10px; cursor: pointer; }
 .lang button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
 .right { display: flex; align-items: center; gap: 32px; }
 
@@ -86,10 +86,10 @@ nav a { text-decoration: none; color: var(--muted); font-size: .9375rem; }
 .sheet { grid-column: 9 / 13; background: var(--sheet); box-shadow: var(--shadow); padding: 14px 14px 6px; animation: settle 1.2s .15s var(--ease) both; }
 @keyframes settle { from { transform: translateY(24px) rotate(1.5deg); opacity: 0; } }
 .sheet img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
-.sheet dl { display: grid; grid-template-columns: auto 1fr; gap: 0 16px; margin-top: 10px; font-size: .875rem; }
+.sheet dl { display: grid; grid-template-columns: auto 1fr; gap: 0; margin-top: 10px; font-size: .875rem; }
 .sheet dt, .sheet dd { padding: 9px 0; border-top: 1px solid var(--rule); }
 .sheet dt { font: 400 .75rem/1.9 var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
-.sheet dd { text-align: right; font-weight: 500; }
+.sheet dd { text-align: right; font-weight: 500; padding-left: 16px; }
 .sheet dd a { text-decoration: none; }
 
 /* sections: heading column | hairline | content, like a ruled ledger */
@@ -110,10 +110,10 @@ section.s { border-top: 1px solid var(--rule); }
 .edu .uni { color: var(--muted); grid-column: 1; }
 .tag { grid-column: 2; grid-row: 1; align-self: start; font: 500 .75rem var(--mono); color: var(--accent); border: 1px solid currentColor; padding: 2px 8px; white-space: nowrap; }
 
-.skills { display: grid; grid-template-columns: max-content 1fr; gap: 0 32px; border-top: 1px solid var(--ink); }
+.skills { display: grid; grid-template-columns: max-content 1fr; gap: 0; border-top: 1px solid var(--ink); }
 .skills dt, .skills dd { padding: 14px 0; border-bottom: 1px solid var(--rule); }
 .skills dt { font-weight: 600; }
-.skills dd { color: var(--muted); }
+.skills dd { color: var(--muted); padding-left: 32px; }
 
 /* projects: a real table — the columns carry data */
 .projects .wrap { display: block; }
@@ -153,7 +153,7 @@ section.contact { border-top: 4px double var(--ink); }
 .clinks { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 40px; list-style: none; padding: 0; }
 .place { margin-top: 24px; color: var(--muted); font-size: .9375rem; display: flex; gap: 8px; align-items: center; }
 footer { border-top: 1px solid var(--rule); }
-footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding-top: 22px; padding-bottom: 28px; color: var(--muted); font: 400 .75rem var(--mono); }
+footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding-top: 22px; padding-bottom: 28px; color: var(--muted); font: 400 .8125rem var(--sans); }
 
 @media (max-width: 860px) {
   :root { --inset: 0px; }
@@ -161,11 +161,11 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
   nav { display: none; }
   .hero { grid-template-columns: 1fr; }
   .hero-text, .sheet { grid-column: 1; }
-  .sheet { max-width: 320px; order: -1; }
+  .sheet { max-width: 320px; }
   .s .wrap { grid-template-columns: 1fr; }
   .s h2 { grid-column: 1; position: static; padding-bottom: 20px; }
   .s .body { grid-column: 1; border-left: 0; padding: 0 0 56px; }
-  .skills { grid-template-columns: 1fr; } .skills dt { border: 0; padding-bottom: 0; } .skills dd { padding-top: 4px; }
+  .skills { grid-template-columns: 1fr; } .skills dt { border: 0; padding-bottom: 0; } .skills dd { padding-top: 4px; padding-left: 0; }
   .ptable { --cols: 2rem minmax(0, 1fr) 1.5rem; }
   .phead .c-lang, .phead .c-upd { display: none; }
   .prow { padding: 20px 4px; }
