@@ -49,6 +49,7 @@ async function main() {
     method: "POST",
     headers: { Authorization: `bearer ${token}`, "Content-Type": "application/json", "User-Agent": LOGIN },
     body: JSON.stringify({ query: QUERY, variables: { login: LOGIN } }),
+    signal: AbortSignal.timeout(30_000),
   });
   if (!res.ok) throw new Error(`GitHub API HTTP ${res.status}: ${await res.text()}`);
   const data = toProjects(await res.json(), { hasCV: existsSync(CV_PATH) });

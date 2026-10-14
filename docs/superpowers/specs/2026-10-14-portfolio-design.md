@@ -50,7 +50,7 @@ Nessun framework, nessuna dipendenza npm (Node 20+ ha `fetch` e `node:test` nati
 
 ### Sviluppo locale
 
-`GITHUB_TOKEN=<token> node scripts/fetch-projects.mjs --out data/projects.json` poi un server statico qualsiasi (`npx serve` o `python -m http.server`). Senza token lo script spiega cosa manca ed esce.
+`GITHUB_TOKEN=<token> node scripts/fetch-projects.mjs data/projects.json` poi un server statico qualsiasi (`npx serve` o `python -m http.server`). Senza token lo script spiega cosa manca ed esce.
 
 ## Comportamento della pagina
 
