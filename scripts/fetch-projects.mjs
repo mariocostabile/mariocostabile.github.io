@@ -4,7 +4,7 @@ import { dirname } from "node:path";
 import { pathToFileURL } from "node:url";
 
 const LOGIN = "mariocostabile";
-const CV_PATH = "assets/cv/cv-mario-costabile.pdf";
+const CV_PATHS = ["it", "en"].map((l) => `assets/cv/cv-mario-costabile-${l}.pdf`);
 const HEX = /^#[0-9a-f]{3,8}$/i;
 const QUERY = `query($login: String!) {
   user(login: $login) {
@@ -52,7 +52,7 @@ async function main() {
     signal: AbortSignal.timeout(30_000),
   });
   if (!res.ok) throw new Error(`GitHub API HTTP ${res.status}: ${await res.text()}`);
-  const data = toProjects(await res.json(), { hasCV: existsSync(CV_PATH) });
+  const data = toProjects(await res.json(), { hasCV: CV_PATHS.every(existsSync) });
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, JSON.stringify(data, null, 2));
   console.log(`Wrote ${data.projects.length} projects to ${out} (CV: ${data.hasCV})`);

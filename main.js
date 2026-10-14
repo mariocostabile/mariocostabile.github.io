@@ -6,7 +6,7 @@ const T = {
     role: "BSc in Computer Engineering",
     lead: "Currently an MSc student in Artificial Intelligence & Machine Learning at the University of Calabria.",
     cta_contact: "Get in touch", cta_projects: "See projects", cta_cv: "Download CV", f_city: "City", f_study: "Studying",
-    about: "I approach every project with method and see it through to the end. I'm not content with what I already know: I look for chances to learn and enjoy taking on different fields, from artificial intelligence to web and mobile development.",
+    about: "I take a methodical approach to every project and see it through to completion. I don't rest on what I already know: I look for opportunities to learn and enjoy working across different fields, from artificial intelligence to web and mobile development.",
     msc: "MSc in Artificial Intelligence & Machine Learning", bsc: "BSc in Computer Engineering", unical: "University of Calabria", ongoing: "Ongoing",
     sk_lang: "Languages", sk_other: "Other", sk_other_v: "Concurrency & multithreading · Telegram bots",
     col_lang: "Language", col_upd: "Updated",
@@ -84,6 +84,7 @@ function render(l) {
   lang = l;
   document.querySelectorAll("[data-i18n]").forEach((e) => { e.textContent = T[l][e.dataset.i18n]; });
   document.documentElement.lang = l;
+  $("#cv").href = `assets/cv/cv-mario-costabile-${l}.pdf`;
   document.querySelectorAll(".lang button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.lang === l));
   renderProjects();
 }

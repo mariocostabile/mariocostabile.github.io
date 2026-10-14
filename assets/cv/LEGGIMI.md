@@ -1,8 +1,8 @@
-# Dove va il CV
+# Dove vanno i CV
 
-Metti qui il tuo curriculum in PDF con questo nome esatto:
+Esporta i due PDF da `cv/cv-it.html` e `cv/cv-en.html` (Ctrl+P, "Salva come PDF", margini nessuno, grafica di sfondo attiva, intestazioni e piè di pagina disattivati) e salvali qui con questi nomi esatti:
 
-    assets/cv/cv-mario-costabile.pdf
+    assets/cv/cv-mario-costabile-it.pdf
+    assets/cv/cv-mario-costabile-en.pdf
 
-Poi fai commit e push. Alla build successiva il bottone "Scarica CV" compare da solo nell'hero.
-Finché il file non esiste, il bottone resta nascosto. Questo file LEGGIMI.md non viene pubblicato.
+Poi commit e push. Il bottone "Scarica CV" compare solo se esistono entrambi i file, e scarica quello della lingua attiva sul sito. Questo LEGGIMI.md non viene pubblicato.
