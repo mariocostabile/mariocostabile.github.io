@@ -32,8 +32,8 @@ Nessun framework, nessuna dipendenza npm (Node 20+ ha `fetch` e `node:test` nati
 1. Trigger della Action: `push` su `main`, `schedule` giornaliero (cron `0 4 * * *`), `workflow_dispatch`.
 2. `node --test scripts/` → se fallisce, niente deploy.
 3. `node scripts/fetch-projects.mjs` con `GITHUB_TOKEN`:
-   - query GraphQL `user(login:"mariocostabile") { avatarUrl pinnedItems(first: 6, types: REPOSITORY) { nodes { ... on Repository { name description url homepageUrl stargazerCount pushedAt primaryLanguage { name color } repositoryTopics(first: 6) { nodes { topic { name } } } } } } }`
-   - `toProjects(response)` (funzione pura, esportata, testata) → `{ syncedAt, avatarUrl, hasCV, projects: [{ name, description, url, homepage, language, color, topics, stars, pushedAt }] }` nell'ordine dei pin.
+   - query GraphQL `user(login:"mariocostabile") { pinnedItems(first: 6, types: REPOSITORY) { nodes { ... on Repository { name description url homepageUrl stargazerCount pushedAt primaryLanguage { name color } repositoryTopics(first: 6) { nodes { topic { name } } } } } } }`
+   - `toProjects(response)` (funzione pura, esportata, testata) → `{ syncedAt, hasCV, projects: [{ name, description, url, homepage, language, color, topics, stars, pushedAt }] }` nell'ordine dei pin.
    - `hasCV = existsSync("assets/cv/cv-mario-costabile.pdf")`.
    - Scrive `_site/data/projects.json`.
 4. Copia in `_site/` solo i file pubblici: `index.html`, `style.css`, `main.js`, `assets/` (senza `LEGGIMI.md`). `docs/`, `PRODUCT.md`, `scripts/` **non** vengono pubblicati.
@@ -57,7 +57,7 @@ Nessun framework, nessuna dipendenza npm (Node 20+ ha `fetch` e `node:test` nati
 - **Lingua:** default da `localStorage` (`lang`), altrimenti `navigator.language` (it* → IT, resto → EN). Toggle IT/EN in alto a destra, `aria-pressed`, aggiorna `<html lang>`. Testi in un oggetto `{ it, en }` in `main.js`, elementi marcati `data-i18n`. Le descrizioni dei repo restano nella lingua di GitHub.
 - **Tema:** solo `prefers-color-scheme`, nessun toggle.
 - **CV:** bottone "Scarica CV" nell'hero, visibile solo se `hasCV` è true; punta a `assets/cv/cv-mario-costabile.pdf` con `download`.
-- **Avatar:** `avatarUrl` da GitHub (fallback: URL avatar fisso nell'HTML, così l'hero non dipende dal JSON).
+- **Avatar:** URL fisso `https://avatars.githubusercontent.com/u/105019269` nell'HTML: è stabile e mostra sempre la foto profilo GitHub corrente, quindi l'hero non dipende dal JSON.
 - **Date:** "aggiornato N giorni/mesi fa" con `Intl.RelativeTimeFormat`; "Sincronizzato con GitHub · <data>" da `syncedAt`.
 - **Contatti:** email con bottone Copia (`navigator.clipboard`, etichetta "Copiata" per 1.8s), LinkedIn, GitHub, Rende (CS). Nessun telefono.
 - **Mobile:** link di navigazione nascosti sotto 860px (resta IT/EN); niente menu hamburger.
