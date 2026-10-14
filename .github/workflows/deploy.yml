@@ -1,0 +1,47 @@
+name: Deploy portfolio
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 4 * * *" # daily refresh of pinned repos
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - name: Test
+        run: node --test scripts/*.test.mjs
+      - name: Build
+        run: |
+          mkdir -p _site
+          cp index.html style.css main.js _site/
+          cp -r assets _site/
+          rm -f _site/assets/cv/LEGGIMI.md
+          node scripts/fetch-projects.mjs _site/data/projects.json
+        env:
+          # PINNED_TOKEN is optional: only needed if GITHUB_TOKEN can't read pinned items
+          GITHUB_TOKEN: ${{ secrets.PINNED_TOKEN || secrets.GITHUB_TOKEN }}
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
