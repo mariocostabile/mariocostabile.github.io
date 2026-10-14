@@ -107,6 +107,18 @@ let saved = null;
 try { saved = localStorage.getItem("lang"); } catch {}
 render(saved === "it" || saved === "en" ? saved : navigator.language.startsWith("it") ? "it" : "en");
 
+// Some browsers open a PDF in a tab despite [download]; a blob URL forces the save. Falls back to the plain link.
+$("#cv").addEventListener("click", async (e) => {
+  e.preventDefault();
+  const a = e.currentTarget;
+  try {
+    const blob = await (await fetch(a.href)).blob();
+    const u = URL.createObjectURL(blob);
+    Object.assign(document.createElement("a"), { href: u, download: `Mario-Costabile-CV-${lang.toUpperCase()}.pdf` }).click();
+    setTimeout(() => URL.revokeObjectURL(u), 1000);
+  } catch { location.href = a.href; }
+});
+
 fetch("data/projects.json")
   .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
   .then((d) => { data = d; $("#cv").hidden = !d.hasCV; })
