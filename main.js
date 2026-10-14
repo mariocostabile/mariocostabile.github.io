@@ -5,7 +5,7 @@ const T = {
     skip: "Skip to content", nav_about: "About", nav_edu: "Education", nav_skills: "Skills", nav_projects: "Projects", nav_contact: "Contact",
     role: "BSc in Computer Engineering",
     lead: "Currently an MSc student in Artificial Intelligence & Machine Learning at the University of Calabria.",
-    cta_contact: "Get in touch", cta_projects: "See projects", cta_cv: "Download CV", f_city: "City", f_study: "Studying",
+    cta_contact: "Get in touch", cta_projects: "See projects", cta_cv: "View CV", f_city: "City", f_study: "Studying",
     about: "I take a methodical approach to every project and see it through to completion. I don't rest on what I already know: I look for opportunities to learn and enjoy working across different fields, from artificial intelligence to web and mobile development.",
     msc: "MSc in Artificial Intelligence & Machine Learning", bsc: "BSc in Computer Engineering", unical: "University of Calabria", ongoing: "Ongoing",
     sk_lang: "Languages", sk_other: "Other", sk_other_v: "Concurrency & multithreading · Telegram bots",
@@ -106,18 +106,6 @@ $("#copy").addEventListener("click", async (e) => {
 let saved = null;
 try { saved = localStorage.getItem("lang"); } catch {}
 render(saved === "it" || saved === "en" ? saved : navigator.language.startsWith("it") ? "it" : "en");
-
-// Some browsers open a PDF in a tab despite [download]; a blob URL forces the save. Falls back to the plain link.
-$("#cv").addEventListener("click", async (e) => {
-  e.preventDefault();
-  const a = e.currentTarget;
-  try {
-    const blob = await (await fetch(a.href)).blob();
-    const u = URL.createObjectURL(blob);
-    Object.assign(document.createElement("a"), { href: u, download: `Mario-Costabile-CV-${lang.toUpperCase()}.pdf` }).click();
-    setTimeout(() => URL.revokeObjectURL(u), 1000);
-  } catch { location.href = a.href; }
-});
 
 fetch("data/projects.json")
   .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
